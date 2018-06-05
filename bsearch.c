@@ -12,6 +12,8 @@ int stringcmp(const void *s1, const void *s2);
 
 int main (int argc, char **argv) {
 
+
+  // looking for an integer
   int key = 312;
   int values[] = { 5, 20, 29, 32, 63 };
   int *item = (int*) bsearch (&key, values, 5, sizeof (int), intcmp);
@@ -23,13 +25,26 @@ int main (int argc, char **argv) {
   }
 
 
+  // looking for a character
+  char characterToFind = 'e';
+  char characters[] = { 'a', 'b', 'c', 'd', 'e' };
+  char *character = (char*) bsearch (&characterToFind, characters, 5, sizeof (char), charcmp);
+
+  if(character != NULL ) {
+     printf("Found character = \'%c\'\n", *character);
+  } else {
+     printf("character = \'%c\' could not be found\n", characterToFind);
+  }
+
+
+  // looking for a string
   char *state = "Vermont";
   const char *stateNames[] = {"Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
   "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
   "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma",
   "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "Washington DC",
   "West Virginia", "Wisconsin", "Wyoming"};
-  char **found = (char **) bsearch(&state, stateNames, 52, sizeof(char *), stringcmp);
+  char **found = (char **) bsearch(&state, stateNames, 51, sizeof(char *), stringcmp);
 
   if(found != NULL ) {
      printf("Found state = \"%s\"\n", *found);
@@ -37,10 +52,13 @@ int main (int argc, char **argv) {
      printf("State = \"%s\" could not be found\n", state);
   }
 
+
   return(0);
 }
 
 
+
+// bsearch implementation
 void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *)){
   int left = 0, right = nitems - 1, mid;
   const void *midElement;
@@ -61,26 +79,22 @@ void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int
 }
 
 
+
+// integers comparing function
 int intcmp(const void * a, const void * b) {
    return ( *(int*)a - *(int*)b );
 }
 
+// characters comparing function
 int charcmp(const void * a, const void * b) {
-  if (*(int*)a > *(int*)b)
+  if (*(char *)a > *(char *)b)
    return 1;
-  if (*(int*)a < *(int*)b)
+  if (*(char *)a < *(char *)b)
     return -1;
   return 0;
 }
 
-//int stringcmp(const void *s1, const void *s2) {
-//  const char *key = s1;
-//  const char * const *arg = s2;
-  //printf("myStrCmp: s1(%p): %s, s2(%p): %s\n", s1, key, s2, *arg);
-//  return strcmp(key, *arg);
-//}
-
+// strings comparing function
 int stringcmp(const void *s1, const void *s2) {
-  //printf("myStrCmp: s1(%p): %s, s2(%p): %s\n", s1, (char *)s1, s2, (char *)s2);
   return strcmp(*(char **) s1, *(char **) s2);
 }
