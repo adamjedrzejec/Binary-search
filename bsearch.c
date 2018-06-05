@@ -11,11 +11,10 @@ int stringcmp(const void *s1, const void *s2);
 
 
 int main (int argc, char **argv) {
-  int *item;
   int key = 32;
   int values[] = { 5, 20, 29, 32, 63 };
 
-  char *state = "Indiana";
+  char *state = "South Carolina";
   const char *stateNames[] = {"Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
   "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
   "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma",
@@ -23,7 +22,7 @@ int main (int argc, char **argv) {
   "West Virginia", "Wisconsin", "Wyoming"};
 
   /* using bsearch() to find value 32 in the array */
-  item = (int*) bsearch (&key, values, 5, sizeof (int), intcmp);
+  int *item = (int*) bsearch (&key, values, 5, sizeof (int), intcmp);
 
   char **found = (char **) bsearch(&state, stateNames, 51, sizeof(char *), stringcmp);
 
@@ -44,10 +43,10 @@ int main (int argc, char **argv) {
 
 
 void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *)){
-  int left = 0, right = nitems, mid;
+  int left = 0, right = nitems - 1, mid;
   const void *midElement;
 
-  while(left <= right){
+  while(left <= right && left <= nitems - 1 && right >= 0){
     mid = floor((right - left) / 2) + left;
 
     midElement = ((const char *) base) + (mid * size);
