@@ -11,20 +11,10 @@ int stringcmp(const void *s1, const void *s2);
 
 
 int main (int argc, char **argv) {
-  int key = 32;
+
+  int key = 312;
   int values[] = { 5, 20, 29, 32, 63 };
-
-  char *state = "South Carolina";
-  const char *stateNames[] = {"Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
-  "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
-  "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma",
-  "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "Washington DC",
-  "West Virginia", "Wisconsin", "Wyoming"};
-
-  /* using bsearch() to find value 32 in the array */
   int *item = (int*) bsearch (&key, values, 5, sizeof (int), intcmp);
-
-  char **found = (char **) bsearch(&state, stateNames, 51, sizeof(char *), stringcmp);
 
   if(item != NULL ) {
      printf("Found item = %d\n", *item);
@@ -32,10 +22,19 @@ int main (int argc, char **argv) {
      printf("Item = %d could not be found\n", key);
   }
 
+
+  char *state = "Vermont";
+  const char *stateNames[] = {"Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
+  "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
+  "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma",
+  "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "Washington DC",
+  "West Virginia", "Wisconsin", "Wyoming"};
+  char **found = (char **) bsearch(&state, stateNames, 52, sizeof(char *), stringcmp);
+
   if(found != NULL ) {
-     printf("Found state = %s\n", *found);
+     printf("Found state = \"%s\"\n", *found);
   } else {
-     printf("State = %s could not be found\n", state);
+     printf("State = \"%s\" could not be found\n", state);
   }
 
   return(0);
