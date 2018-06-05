@@ -6,12 +6,12 @@
 
 void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *));
 int intcmp(const void * a, const void * b);
+int floatcmp(const void * a, const void * b);
 int charcmp(const void * a, const void * b);
 int stringcmp(const void *s1, const void *s2);
 
 
 int main (int argc, char **argv) {
-
 
   // looking for an integer
   int key = 312;
@@ -22,6 +22,18 @@ int main (int argc, char **argv) {
      printf("Found item = %d\n", *item);
   } else {
      printf("Item = %d could not be found\n", key);
+  }
+
+
+  // looking for a float
+  float floatToFind = 46.718;
+  float floats[] = { 5, 20, 21.5, 29, 32, 46.718, 63 };
+  float *floatingNumber = (float*) bsearch (&floatToFind, floats, 7, sizeof (float), floatcmp);
+
+  if(floatingNumber != NULL ) {
+     printf("Found float = %f\n", *floatingNumber);
+  } else {
+     printf("Float = %f could not be found\n", floatToFind);
   }
 
 
@@ -83,6 +95,15 @@ void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int
 // integers comparing function
 int intcmp(const void * a, const void * b) {
    return ( *(int*)a - *(int*)b );
+}
+
+// floats comparing function
+int floatcmp(const void * a, const void * b) {
+  if( *(float*)a - *(float*)b > 0){
+    return 1;
+  }else if( *(float*)a - *(float*)b < 0){
+    return -1;
+  }return 0;
 }
 
 // characters comparing function
