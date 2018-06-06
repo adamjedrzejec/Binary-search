@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *));
+void *bsearch(const void *key, const void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *));
 int intcmp(const void * a, const void * b);
 int floatcmp(const void * a, const void * b);
 int charcmp(const void * a, const void * b);
@@ -26,7 +26,7 @@ int main (int argc, char **argv) {
 
 
   // looking for a float
-  float floatToFind = 46.718;
+  float floatToFind = 29.0;
   float floats[] = { 5, 20, 21.5, 29, 32, 46.718, 63 };
   float *floatingNumber = (float*) bsearch (&floatToFind, floats, 7, sizeof (float), floatcmp);
 
@@ -50,13 +50,9 @@ int main (int argc, char **argv) {
 
 
   // looking for a string
-  char *state = "Vermont";
-  const char *stateNames[] = {"Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii",
-  "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
-  "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma",
-  "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "Washington DC",
-  "West Virginia", "Wisconsin", "Wyoming"};
-  char **found = (char **) bsearch(&state, stateNames, 51, sizeof(char *), stringcmp);
+  char *state = "United States";
+  const char *stateNames[] = {"Albania", "Canada", "Egypt", "Japan", "Oman", "Poland", "United States"};
+  char **found = (char **) bsearch(&state, stateNames, 7, sizeof(char *), stringcmp);
 
   if(found != NULL ) {
      printf("Found state = \"%s\"\n", *found);
@@ -71,11 +67,11 @@ int main (int argc, char **argv) {
 
 
 // bsearch implementation
-void *bsearch(const void *key, const void *base, size_t nitems, size_t size, int (*compar)(const void *, const void *)){
-  int left = 0, right = nitems - 1, mid;
+void *bsearch(const void *key, const void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *)){
+  int left = 0, right = nmemb - 1, mid;
   const void *midElement;
 
-  while(left <= right && left <= nitems - 1 && right >= 0){
+  while(left <= right && left <= nmemb - 1 && right >= 0){
     mid = floor((right - left) / 2) + left;
 
     midElement = ((const char *) base) + (mid * size);
